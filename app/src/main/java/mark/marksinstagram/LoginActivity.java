@@ -14,9 +14,10 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 
-public class LoginActivity extends AppCompatActivity  {
+public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
@@ -24,6 +25,9 @@ public class LoginActivity extends AppCompatActivity  {
     // UI references.
     private AutoCompleteTextView etUsername;
     private EditText etPassword;
+    private AutoCompleteTextView etNewUsername;
+    private EditText etNewPassword;
+    private EditText etNewEmail;
 
 
     @Override
@@ -33,19 +37,61 @@ public class LoginActivity extends AppCompatActivity  {
         // Set up the login form.
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
+        etNewUsername = findViewById(R.id.etNewUsername);
+        etNewPassword = findViewById(R.id.etNewPassword);
+        etNewEmail = findViewById(R.id.etNewEmail);
+
 
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                attemptLogin(username, password);
+            }
+        });
+
+        Button btnSignUp = (Button) findViewById(R.id.btnSignUp);
+        btnSignUp.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String username = etNewUsername.getText().toString(),
+                        password = etNewPassword.getText().toString(),
+                        email = etNewEmail.getText().toString();
+                if(isEmailValid(email) && isPasswordValid(password) && username.length() > 4)
+                    attemptSignUp(username, password, email);
+                else{
+                    Toast.makeText(LoginActivity.this, "Make sure you enter a valid " + (isEmailValid(email) ? "password!" : "email!"), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private void attemptLogin() {
-        String username = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
+    private void attemptSignUp(final String username, final String password, final String email) {
+        // Create the ParseUser
+        ParseUser user = new ParseUser();
+        // Set core properties
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        // Invoke signUpInBackground
+        user.signUpInBackground(new SignUpCallback() {
+            public void done(ParseException e) {
+                if (e == null) {
+                    attemptLogin(username, password);
+                } else {
+                    Toast.makeText(LoginActivity.this, "There was an error signing up", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Issue with sign up.\tusername: " + username + "\tpassword: " + password + "\temail: " + email);
+                    e.printStackTrace();
+                    // Sign up didn't succeed. Look at the ParseException
+                    // to figure out what went wrong
+                }
+            }
+        });
+    }
+
+    private void attemptLogin(String username, String password) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
@@ -113,12 +159,10 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
