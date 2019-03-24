@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public final String TAG = "MainActivity";
     private EditText etCaption;
     private Button btnCaptureImage;
+    private Button btnLogout;
     private ImageView ivPostImage;
     private Button btnSubmit;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         btnCaptureImage = findViewById(R.id.btnCaptureImage);
         ivPostImage = findViewById(R.id.ivPostImage);
         btnSubmit = findViewById(R.id.btnSubmit);
+        btnLogout = findViewById(R.id.btnLogout);
 
 //        queryPosts();
         btnSubmit.setOnClickListener(new View.OnClickListener(){
@@ -71,6 +73,22 @@ public class MainActivity extends AppCompatActivity {
                 launchCamera();
             }
         });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+                goLogin();
+            }
+        });
+    }
+
+    private void goLogin() {
+        Log.d(TAG, "Navigating to Main Activity");
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
     private void launchCamera() {

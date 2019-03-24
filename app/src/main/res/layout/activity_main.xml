@@ -36,5 +36,12 @@
         android:id="@+id/btnSubmit"
         android:text="@string/post"/>
 
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/log_out" />
+
 
 </LinearLayout>
