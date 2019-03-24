@@ -10,7 +10,7 @@ The following user stories are completed:
 
 - [x] User can sign up to create a new account using Parse authentication.
 - [x] User can log in and log out of his or her account.
-- [ ] The current signed in user is persisted across app restarts.
+- [x] The current signed in user is persisted across app restarts.
 - [x] User can take a photo, add a caption, and post it to "Instagram".
 
 The following stretch features are implemented:
