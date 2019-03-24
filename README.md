@@ -24,7 +24,9 @@ The following stretch features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='GIF Walkthrough' width='' alt='GIF Walkthrough' />
+<img src='walkthru1.gif' title='GIF Walkthrough' width='' alt='GIF Walkthrough' />
+<img src='walkthru2.gif' title='GIF Walkthrough' width='' alt='GIF Walkthrough' />
+<img src='walkthru3.gif' title='GIF Walkthrough' width='' alt='GIF Walkthrough' />
 
 
 ## Open-source libraries used
