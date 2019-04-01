@@ -20,15 +20,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.List;
 
 import mark.marksinstagram.Post;
 import mark.marksinstagram.R;
@@ -172,24 +169,6 @@ public class ComposeFragment extends Fragment {
                 Log.d(TAG, "Success!!");
                 etCaption.setText("");
                 ivPostImage.setImageResource(0);
-            }
-        });
-    }
-
-    private void queryPosts() {
-        ParseQuery<Post> postQuery = new ParseQuery<>(Post.class);
-        postQuery.include(Post.KEY_USER);
-        postQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error with query");
-                    e.printStackTrace();
-                    return;
-                }
-                for(Post post : posts ){
-                    Log.d(TAG, "Post: " + post.getCaption() + ", username: " + post.getUser().getUsername());
-                }
             }
         });
     }
