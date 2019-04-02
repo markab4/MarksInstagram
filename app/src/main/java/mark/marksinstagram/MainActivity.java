@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import mark.marksinstagram.fragments.ComposeFragment;
 import mark.marksinstagram.fragments.PostsFragment;
+import mark.marksinstagram.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_profile:
                     default:
                         // TODO: swap fragment here
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment();
 //                        Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
                         break;
                 }
