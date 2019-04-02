@@ -27,6 +27,7 @@ import com.parse.SaveCallback;
 
 import java.io.File;
 
+import mark.marksinstagram.LoginActivity;
 import mark.marksinstagram.Post;
 import mark.marksinstagram.R;
 
@@ -88,16 +89,16 @@ public class ComposeFragment extends Fragment {
             public void onClick(View v) {
                 ParseUser.logOut();
                 ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
-//                goLogin();
+                goLogin();
             }
         });
     }
-//    private void goLogin() {
-//        Log.d(TAG, "Navigating to Main Activity");
-//        Intent i = new Intent(getContext(), LoginActivity.class);
-//        startActivity(i);
+    private void goLogin() {
+        Log.d(TAG, "Navigating to Main Activity");
+        Intent i = new Intent(getContext(), LoginActivity.class);
+        startActivity(i);
 //        finish();
-//    }
+    }
 
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
@@ -140,16 +141,12 @@ public class ComposeFragment extends Fragment {
         // Use `getExternalFilesDir` on Context to access package-specific directories.
         // This way, we don't need to request external read/write runtime permissions.
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
-
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
             Log.d(TAG, "failed to create directory");
         }
-
         // Return the file target for the photo based on filename
-        File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
-
-        return file;
+        return new File(mediaStorageDir.getPath() + File.separator + fileName);
     }
 
     private void savePost(String caption, ParseUser parseUser, File photoFile) {

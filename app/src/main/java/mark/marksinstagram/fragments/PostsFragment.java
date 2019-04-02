@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,6 +28,8 @@ public class PostsFragment extends Fragment {
     private RecyclerView rvPosts;
     protected PostsAdapter adapter;
     protected List<Post> mPosts;
+    private SwipeRefreshLayout swipeContainer;
+
 
     // onCreateView to inflate the view
     @Nullable
@@ -37,8 +40,12 @@ public class PostsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         rvPosts = view.findViewById(R.id.rvPosts);
-
         // create the data source
         mPosts = new ArrayList<>();
         // create the adapter
@@ -48,6 +55,14 @@ public class PostsFragment extends Fragment {
         // set the layout manager on the recycler view
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         queryPosts();
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.d(TAG, "content is being refreshed");
+                queryPosts();
+            }
+        });
     }
 
     protected void queryPosts() {
@@ -58,7 +73,6 @@ public class PostsFragment extends Fragment {
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
-
                 if (e != null) {
                     Log.e(TAG, "Error with query");
                     e.printStackTrace();
@@ -69,8 +83,8 @@ public class PostsFragment extends Fragment {
                 for(Post post : posts ){
                     Log.d(TAG, "Post: " + post.getCaption() + ", username: " + post.getUser().getUsername());
                 }
+                swipeContainer.setRefreshing(false);
             }
         });
     }
-
 }
