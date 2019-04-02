@@ -37,9 +37,9 @@ The following stretch features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='walkthru1.gif' title='GIF Walkthrough' width='' alt='GIF Walkthrough' />
-<img src='walkthru2.gif' title='GIF Walkthrough' width='' alt='GIF Walkthrough' />
-<img src='walkthru3.gif' title='GIF Walkthrough' width='' alt='GIF Walkthrough' />
+<img src='walkthru4.gif' title='GIF Walkthrough' width='' alt='GIF Walkthrough' />
+<img src='walkthru5.gif' title='GIF Walkthrough' width='' alt='GIF Walkthrough' />
+<img src='walkthru6.gif' title='GIF Walkthrough' width='' alt='GIF Walkthrough' />
 
 
 ## Open-source libraries used
